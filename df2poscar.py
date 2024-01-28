@@ -4,20 +4,20 @@ import os
 from pathlib import Path
 
 
-def df2poscar(df, original_poscar_path="./POSCAR", generated_poscar_path="./gen_data/POSCAR"):
+def df2poscar(df_poscar_ion_replaced_point, original_poscar_path="./POSCAR", generated_poscar_path="./gen_data/POSCAR"):
     """
     This func() writes a DataFrame(:df_poscar_ion_replaced_point) to a POSCAR file.
-    
+
     Usage:
     ------
-    df2poscar(df, original_poscar_path=original_poscar_path, generated_poscar_path=generated_poscar_path)
-    
+    df2poscar(df_poscar_ion_replaced_point, original_poscar_path=original_poscar_path, generated_poscar_path=generated_poscar_path)
+
     Parameters:
     -----------
-    df: pd.DataFrame
+    df_poscar_ion_replaced_point: pd.DataFrame
     original_poscar_path: str or pathlib.Path
     generated_poscar_path: str or pathlib.Path
-    
+
     Return:
     -------
     None
@@ -30,8 +30,8 @@ def df2poscar(df, original_poscar_path="./POSCAR", generated_poscar_path="./gen_
     comment_scalingfactor_lattice_line = lines[:5]
 
     # df_poscar_ion_replaced_pointから元素種を文字列として抽出
-    species_line = '  ' + '   '.join(df['atom_symbol'].unique())
-    num_line = '   ' + '   '.join([str(len(df[df['atom_symbol'] == specie])) for specie in df['atom_symbol'].unique()])
+    species_line = '  ' + '   '.join(df_poscar_ion_replaced_point['atom_symbol'].unique())
+    num_line = '   ' + '   '.join([str(len(df_poscar_ion_replaced_point[df_poscar_ion_replaced_point['atom_symbol'] == specie])) for specie in df_poscar_ion_replaced_point['atom_symbol'].unique()])
     ion_per_species_line = species_line + '\n' + num_line
 
     # 構造情報が始まる行を特定し，抽出
@@ -41,7 +41,7 @@ def df2poscar(df, original_poscar_path="./POSCAR", generated_poscar_path="./gen_
     selective_dynamics_line = lines[start_line]
 
     # df_poscar_ion_replaced_pointを文字列に変換
-    ion_positions_line = df[['x', 'y', 'z']].to_string(col_space=3, header=False, index=False, index_names=False)
+    ion_positions_line = df_poscar_ion_replaced_point[['x', 'y', 'z']].to_string(col_space=3, header=False, index=False, index_names=False)
     # 列間のスペースを1つから3つに変更
     ion_positions_line = ion_positions_line.replace(' ', '   ')
     # 各行の先頭にスペースを追加
@@ -49,7 +49,7 @@ def df2poscar(df, original_poscar_path="./POSCAR", generated_poscar_path="./gen_
 
     # ここから書き込みパート
     # 生成ファイル出力先を確認
-    generated_poscar_folder = os.path.split(Path(generated_poscar_path))[0] 
+    generated_poscar_folder = os.path.split(Path(generated_poscar_path))[0]
     None if os.path.exists(generated_poscar_folder) else os.makedirs(generated_poscar_folder)
     # 新しいPOSCARファイルに書き込む
     with open(generated_poscar_path, 'w') as outfile:
