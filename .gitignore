@@ -1,0 +1,12 @@
+#ignore .ipynb file
+*.ipynb
+
+#ignore .ipynb_checkpoints folder
+.ipynb_checkpoints/
+
+#ignore *old.py
+*old.py
+
+#ignore old/ folder
+old/
+
