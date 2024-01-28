@@ -6,10 +6,21 @@ from pathlib import Path
 
 def df2poscar(df, original_poscar_path="./POSCAR", generated_poscar_path="./gen_data/POSCAR"):
     """
-    Writing the DataFrame(:df_poscar_ion_replaced_point) to a POSCAR file.
-    param1: df=df_poscar_ion_replaced_point: DataFrame that has 'X', 'Y', 'Z' columns about coords.
-    param2: original POSCAR file
-    param3: generated POSCAR file
+    This func() writes a DataFrame(:df_poscar_ion_replaced_point) to a POSCAR file.
+    
+    Usage:
+    ------
+    df2poscar(df, original_poscar_path=original_poscar_path, generated_poscar_path=generated_poscar_path)
+    
+    Parameters:
+    -----------
+    df: pd.DataFrame
+    original_poscar_path: str or pathlib.Path
+    generated_poscar_path: str or pathlib.Path
+    
+    Return:
+    -------
+    None
     """
     # POSCARファイルを読み込む
     with open(original_poscar_path, 'r') as file:
