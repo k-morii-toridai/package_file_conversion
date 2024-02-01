@@ -11,7 +11,7 @@ def nnlist2df(nnlist_path='POSCAR.nnlist'):
 
     Usage:
     -------
-    df_nnlist = nnlist2df(nnlist_path='POSCAR.nnlist')
+    df_nnlist = nnlist2df(nnlist_path=nnlist_path)
 
     Parameter:
     ------------
@@ -26,7 +26,7 @@ def nnlist2df(nnlist_path='POSCAR.nnlist'):
     df_nnlist = pd.read_csv(nnlist_path, sep='\\s+', header=None)
     # 列名を設定します。
     df_nnlist.columns = ["central_atom_id", "neighboring_atom_id", "rel_distance", "rel_x", "rel_y", "rel_z",
-                  "unitcell_x", "unitcell_y", "unitcell_z", "central_atom_symbol", "neighboring_atom_symbol"]
+                         "unitcell_x", "unitcell_y", "unitcell_z", "central_atom_symbol", "neighboring_atom_symbol"]
     # cast int64 to str for central_atom_id column
     df_nnlist['central_atom_id'] = df_nnlist['central_atom_id'].astype(str)
     # cast int64 to str for neighboring_atom_id column
